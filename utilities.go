@@ -20,19 +20,43 @@ func Test(message string, optionalValue *string) {
 
 }
 
-func GetUserSingleCommand() string {
+func getUserLine() string {
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("give me a command, mr. user:")
 
 	line, err := reader.ReadString('\n')
 
-	if err != nil {
+	gotErrorReading := err != nil
+
+	if gotErrorReading {
 		fmt.Println("Error reading input:", err)
 		return ""
 	}
 
+	// it comes with these escape sequences
 	line = strings.TrimSuffix(line, "\r\n")
+
+	return line
+
+}
+
+func GetUserLines() []string {
+	
+	var lines []string
+
+	fmt.Println("give me commands, mr. user:")
+
+	for line := getUserLine(); line != "exit"; line = getUserLine() {
+		lines = append(lines, line)
+	}
+
+	return lines
+
+}
+
+func GetUserSingleLine() string {
+
+	line := getUserLine()
 
 	return line
 

@@ -2,16 +2,15 @@ package main
 
 // import "fmt"
 
-func main() {
+	/*
+		line := GetUserSingleLine()
+		userLineCharacters := StringToSliceOfCharacters(line)
 
-	command := GetUserSingleCommand()
-	commandCharacters := StringToSliceOfCharacters(command)
-
-	CheckSyntax(commandCharacters)
-	
+		CheckSyntax(userLineCharacters)
+	*/
 
 	/*
-		correctSyntax := CheckSyntax(commandCharacters)
+		correctSyntax := CheckSyntax(userLineCharacters)
 
 		if correctSyntax {
 			// I got a warning writing fmt.Println("\nAccepted!\n")
@@ -22,5 +21,17 @@ func main() {
 			fmt.Println()
 		}
 	*/
+	
+func main() {
+
+	lines := GetUserLines()
+
+	for _, line := range lines {
+
+		userLineCharacters := StringToSliceOfCharacters(line)
+
+		CheckSyntax(userLineCharacters)
+
+	}
 
 }
