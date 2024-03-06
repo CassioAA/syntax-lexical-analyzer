@@ -7,28 +7,32 @@ import (
 	"strings"
 )
 
-func PopStringsFromSlice(slice *[]string, checkpointBackwards int) {
-	// everything before the checkpointBackwards
-	// [ everything : checkpoint ]
-	*slice = (*slice)[:checkpointBackwards]
-}
+// a very simple way to check what's happening
+func Test(message string, optionalValue *string) {
 
-func PushCharactersStringIntoSlice(slice *[]string, str string) {
-	// a string is not made of characteres, but bytes that represent characteres
-	// a slice is a mutable-sized array, preferable for further use
-	for index := 0; index < len(str); index++ {
-		*slice = append(*slice, string(str[index]))
+	hasOptionalValue := optionalValue != nil
+
+	if hasOptionalValue {
+		fmt.Println(message, " at ", *optionalValue, "° time")
+	} else {
+		fmt.Println(message)
 	}
 
 }
 
 func GetUserSingleCommand() string {
 
+	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("give me a command, mr. user:")
 
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	line := scanner.Text()
+	line, err := reader.ReadString('\n')
+
+	if err != nil {
+		fmt.Println("Error reading input:", err)
+		return ""
+	}
+
+	line = strings.TrimSuffix(line, "\r\n")
 
 	return line
 
@@ -37,9 +41,14 @@ func GetUserSingleCommand() string {
 func StringToSliceOfCharacters(str string) []string {
 
 	var sliceOfCharacters []string
+
 	for i := 0; i < len(str); i++ {
-		sliceOfCharacters = append(sliceOfCharacters, string(str[i]))
+
+		characterString := string(str[i])
+		sliceOfCharacters = append(sliceOfCharacters, characterString)
+
 	}
+
 	return sliceOfCharacters
 
 }
